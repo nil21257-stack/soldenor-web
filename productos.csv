@@ -1,0 +1,4 @@
+id,nombre,categoria,precio,moneda,disponible,stock,sku,imagen,descripcion,spec_keys,spec_values
+1,Auriculares inalámbricos Aether X1,Audio,2450,RD$,true,14,AER-X1-BLK,https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&q=80,Auriculares over-ear con cancelación activa de ruido y 40 horas de batería.,Bluetooth | Autonomía | Cancelación de ruido | Peso,5.3 | 40 h | Activa (ANC) | 260 g
+2,Teclado mecánico Vortex 87,Periféricos,3200,RD$,true,6,TEC-V87-RGB,https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800&q=80,Teclado TKL con switches intercambiables en caliente e iluminación RGB.,Switches | Conexión | Iluminación,Hot-swap | USB-C / Bluetooth | RGB por tecla
+3,Monitor curvo Lumen 27",Monitores,12800,RD$,false,0,MON-L27-QHD,https://images.unsplash.com/photo-1547082299-de196ea013d6?w=800&q=80,Monitor curvo QHD de 165Hz ideal para trabajo y gaming.,Resolución | Frecuencia | Panel,2560x1440 | 165 Hz | VA curvo

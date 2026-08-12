@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLDENOR — Paneles solares, inversores y baterías</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#10141B; --surface:#171D27; --surface-2:#1D2431; --border:#262E3B; --border-strong:#374156;
+    --text:#E7ECF2; --text-muted:#8A96A6; --text-faint:#5B6577;
+    --accent:#D08A4F; --accent-dim:#3A2B1D; --accent-glow:rgba(208,138,79,0.35);
+    --ok:#4FB286; --ok-dim:#173226;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif; line-height:1.6;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  section{padding:80px 32px;}
+  .wrap{max-width:1160px; margin:0 auto;}
+  .eyebrow{font-size:12px; letter-spacing:1px; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:10px;}
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:50; background:rgba(16,20,27,0.9); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border); padding:16px 32px;
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; max-width:1160px; margin:0 auto;}
+  .logo{display:flex; align-items:center; gap:11px;}
+  .logo svg{flex-shrink:0;}
+  .logo-text{display:flex; flex-direction:column; line-height:1.1;}
+  .logo-text .name{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; letter-spacing:0.3px;}
+  .logo-text .tagline{font-size:10.5px; color:var(--text-faint); letter-spacing:0.3px;}
+  .nav-links{color:var(--text-muted);}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links{display:flex; gap:30px; font-size:14px; color:var(--text-muted);}
+  .nav-links a{text-decoration:none; transition:color 0.15s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{
+    background:var(--accent); color:#241608; padding:9px 18px; border-radius:8px; font-size:13.5px;
+    font-weight:600; text-decoration:none; white-space:nowrap;
+  }
+  @media(max-width:800px){.nav-links{display:none;}}
+
+  /* Hero */
+  .hero{padding:90px 32px 60px; text-align:center;}
+  .hero h1{font-size:44px; font-weight:700; letter-spacing:-0.5px; max-width:780px; margin:0 auto 18px; line-height:1.15;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{color:var(--text-muted); font-size:16.5px; max-width:520px; margin:0 auto 30px;}
+  .hero-ctas{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:64px;}
+  .btn-primary{background:var(--accent); color:#241608; padding:13px 24px; border-radius:9px; font-weight:600; font-size:14.5px; text-decoration:none;}
+  .btn-secondary{border:1px solid var(--border-strong); color:var(--text); padding:13px 24px; border-radius:9px; font-weight:500; font-size:14.5px; text-decoration:none;}
+
+  /* Flow diagram - signature element */
+  .flow{
+    display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap; max-width:920px; margin:0 auto;
+    padding:34px 20px; background:var(--surface); border:1px solid var(--border); border-radius:18px;
+  }
+  .flow-node{display:flex; flex-direction:column; align-items:center; gap:10px; width:150px;}
+  .flow-icon{
+    width:56px; height:56px; border-radius:14px; background:var(--surface-2); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .flow-icon.on{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow);}
+  .flow-label{font-size:12.5px; font-weight:500; text-align:center;}
+  .flow-sub{font-size:10.5px; color:var(--text-faint); text-align:center;}
+  .flow-arrow{flex:0 0 auto; width:44px; height:2px; background:linear-gradient(90deg, var(--border-strong), var(--accent)); position:relative; margin-top:-30px;}
+  .flow-arrow::after{content:"";position:absolute; right:-1px; top:-3px; width:0; height:0; border-left:6px solid var(--accent); border-top:4px solid transparent; border-bottom:4px solid transparent;}
+  @media(max-width:760px){ .flow{flex-direction:column;} .flow-arrow{width:2px; height:28px; margin:0;} .flow-arrow::after{right:-3px; top:auto; bottom:-1px; border-left:4px solid transparent; border-right:4px solid transparent; border-top:6px solid var(--accent); border-bottom:none;} }
+
+  /* Stats strip */
+  .stats{display:flex; justify-content:center; gap:60px; flex-wrap:wrap; padding:50px 32px; border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
+  .stat{text-align:center;}
+  .stat-num{font-size:30px; font-weight:700; font-family:'Space Grotesk',sans-serif; color:var(--accent);}
+  .stat-label{font-size:12.5px; color:var(--text-muted); margin-top:4px;}
+
+  /* Services */
+  .services-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; margin-top:36px;}
+  .service-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px; transition:border-color 0.15s;}
+  .service-card:hover{border-color:var(--border-strong);}
+  .service-icon{width:40px; height:40px; border-radius:10px; background:var(--accent-dim); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+  .service-card h3{font-size:17px; margin-bottom:8px;}
+  .service-card p{font-size:13.5px; color:var(--text-muted); margin:0;}
+
+  /* Process */
+  .process{display:flex; gap:0; margin-top:40px; flex-wrap:wrap;}
+  .process-step{flex:1; min-width:200px; padding:0 20px 20px 0; position:relative;}
+  .process-num{font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:13px; margin-bottom:10px;}
+  .process-step h3{font-size:15.5px; margin-bottom:6px;}
+  .process-step p{font-size:13px; color:var(--text-muted); margin:0;}
+
+  /* About */
+  .about{display:grid; grid-template-columns:1.1fr 0.9fr; gap:50px; align-items:center;}
+  .about p{color:var(--text-muted); font-size:15px; margin-bottom:14px;}
+  .about-badges{display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;}
+  .badge{border:1px solid var(--border); background:var(--surface); padding:8px 14px; border-radius:100px; font-size:12.5px; color:var(--text-muted);}
+  .about-panel{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px;}
+  .about-row{display:flex; justify-content:space-between; padding:13px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .about-row:last-child{border-bottom:none;}
+  @media(max-width:820px){.about{grid-template-columns:1fr;}}
+
+  /* Catalog CTA */
+  .cat-cta{
+    background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:44px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  .cat-cta h2{font-size:24px;}
+  .cat-cta p{color:var(--text-muted); max-width:460px; margin:0;}
+
+  /* Contact */
+  .contact-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:40px; align-items:start;}
+  .contact-item{display:flex; gap:14px; align-items:flex-start; margin-bottom:20px;}
+  .contact-icon{width:38px; height:38px; border-radius:9px; background:var(--surface-2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .contact-item h3{font-size:14px; margin-bottom:3px;}
+  .contact-item p{font-size:13.5px; color:var(--text-muted); margin:0;}
+  form{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:26px; display:flex; flex-direction:column; gap:14px;}
+  form input, form textarea{
+    background:var(--surface-2); border:1px solid var(--border); color:var(--text); padding:12px 14px;
+    border-radius:8px; font-family:inherit; font-size:14px; width:100%;
+  }
+  form textarea{resize:vertical; min-height:90px;}
+  form button{
+    background:var(--accent); color:#241608; border:none; padding:13px; border-radius:8px; font-weight:600;
+    font-size:14.5px; cursor:pointer; font-family:inherit;
+  }
+  @media(max-width:820px){.contact-grid{grid-template-columns:1fr;}}
+
+  footer{border-top:1px solid var(--border); padding:34px 32px; text-align:center; color:var(--text-faint); font-size:13px;}
+
+  @media(max-width:600px){ .hero h1{font-size:32px;} section{padding:56px 20px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <circle cx="17" cy="10" r="4" fill="#D08A4F"/>
+        <line x1="17" y1="0" x2="17" y2="3" stroke="#D08A4F" stroke-width="1.6"/>
+        <line x1="17" y1="0" x2="17" y2="3" stroke="#D08A4F" stroke-width="1.6" transform="rotate(45 17 10)"/>
+        <line x1="17" y1="0" x2="17" y2="3" stroke="#D08A4F" stroke-width="1.6" transform="rotate(-45 17 10)"/>
+        <line x1="17" y1="0" x2="17" y2="3" stroke="#D08A4F" stroke-width="1.6" transform="rotate(90 17 10)"/>
+        <line x1="17" y1="0" x2="17" y2="3" stroke="#D08A4F" stroke-width="1.6" transform="rotate(-90 17 10)"/>
+        <g>
+          <rect x="4" y="17" width="12" height="14" rx="1.5" fill="#1D2431" stroke="#374156"/>
+          <line x1="4" y1="21" x2="16" y2="21" stroke="#374156"/>
+          <line x1="4" y1="25" x2="16" y2="25" stroke="#374156"/>
+          <line x1="10" y1="17" x2="10" y2="31" stroke="#374156"/>
+          <rect x="18" y="17" width="12" height="14" rx="1.5" fill="#1D2431" stroke="#374156"/>
+          <line x1="18" y1="21" x2="30" y2="21" stroke="#374156"/>
+          <line x1="18" y1="25" x2="30" y2="25" stroke="#374156"/>
+          <line x1="24" y1="17" width="0" y2="31" x2="24" stroke="#374156"/>
+        </g>
+      </svg>
+      <div class="logo-text">
+        <span class="name">SOLDENOR</span>
+        <span class="tagline">Soluciones Solar Energéticas</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a href="catalogo.html" class="nav-cta">Ver catálogo</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Energía solar en República Dominicana</div>
+  <h1>Independencia energética con <span>paneles, inversores y baterías</span> instalados por expertos</h1>
+  <p>SOLDENOR diseña, vende e instala sistemas solares residenciales y comerciales, de principio a fin.</p>
+  <div class="hero-ctas">
+    <a href="#contacto" class="btn-primary">Solicitar cotización</a>
+    <a href="catalogo.html" class="btn-secondary">Ver catálogo de equipos</a>
+  </div>
+
+  <div class="flow">
+    <div class="flow-node">
+      <div class="flow-icon on">☀</div>
+      <div class="flow-label">Sol</div>
+      <div class="flow-sub">Radiación captada</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node">
+      <div class="flow-icon on">▦</div>
+      <div class="flow-label">Panel solar</div>
+      <div class="flow-sub">Corriente DC</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node">
+      <div class="flow-icon on">⇄</div>
+      <div class="flow-label">Inversor</div>
+      <div class="flow-sub">DC → AC</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node">
+      <div class="flow-icon on">▮</div>
+      <div class="flow-label">Batería</div>
+      <div class="flow-sub">Respaldo 24/7</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node">
+      <div class="flow-icon">⌂</div>
+      <div class="flow-label">Tu propiedad</div>
+      <div class="flow-sub">Energía estable</div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num mono">150+</div><div class="stat-label">Sistemas instalados</div></div>
+  <div class="stat"><div class="stat-num mono">24/7</div><div class="stat-label">Soporte técnico</div></div>
+  <div class="stat"><div class="stat-num mono">10 años</div><div class="stat-label">Garantía en instalación</div></div>
+</div>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="eyebrow">Servicios</div>
+    <h2 style="font-size:28px;">Todo el sistema, una sola empresa</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">▦</div>
+        <h3>Paneles solares</h3>
+        <p>Venta e instalación de paneles monocristalinos de alta eficiencia, dimensionados según tu consumo real.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⇄</div>
+        <h3>Inversores</h3>
+        <p>Inversores híbridos y de conexión a red, configurados para maximizar autoconsumo y respaldo ante apagones.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">▮</div>
+        <h3>Baterías de respaldo</h3>
+        <p>Almacenamiento de litio para mantener tu propiedad funcionando durante interrupciones del servicio eléctrico.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚒</div>
+        <h3>Instalación y mantenimiento</h3>
+        <p>Equipo técnico certificado para instalación, puesta en marcha y mantenimiento preventivo periódico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="wrap">
+    <div class="eyebrow">Cómo trabajamos</div>
+    <h2 style="font-size:28px;">De la cotización a la energía funcionando</h2>
+    <div class="process">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <h3>Evaluación</h3>
+        <p>Revisamos tu consumo eléctrico y el espacio disponible para dimensionar el sistema correcto.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <h3>Propuesta</h3>
+        <p>Te entregamos una cotización clara con equipos, costos y tiempo estimado de instalación.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <h3>Instalación</h3>
+        <p>Nuestro equipo técnico instala paneles, inversor y baterías, y realiza las pruebas de funcionamiento.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <h3>Soporte</h3>
+        <p>Monitoreo y mantenimiento continuo para que el sistema rinda al máximo por años.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="wrap about">
+    <div>
+      <div class="eyebrow">Sobre SOLDENOR</div>
+      <h2 style="font-size:28px; margin-bottom:16px;">Especialistas en energía solar, no generalistas</h2>
+      <p>SOLDENOR se dedica exclusivamente a sistemas solares: paneles, inversores y baterías. Esa especialización nos permite recomendar el equipo correcto para cada propiedad, no solo lo que tengamos en inventario.</p>
+      <p>Trabajamos con marcas reconocidas en el mercado y garantizamos tanto los equipos como la mano de obra de instalación.</p>
+      <div class="about-badges">
+        <div class="badge">Técnicos certificados</div>
+        <div class="badge">Garantía en instalación</div>
+        <div class="badge">Soporte post-venta</div>
+      </div>
+    </div>
+    <div class="about-panel">
+      <div class="about-row"><span class="text-muted">Cobertura</span><span>Nacional</span></div>
+      <div class="about-row"><span class="text-muted">Tipos de sistema</span><span>Residencial / Comercial</span></div>
+      <div class="about-row"><span class="text-muted">Marcas</span><span>Múltiples fabricantes certificados</span></div>
+      <div class="about-row"><span class="text-muted">Financiamiento</span><span>Consultar disponibilidad</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cat-cta">
+      <h2>Explora nuestro catálogo de equipos</h2>
+      <p>Paneles, inversores y baterías disponibles, con precios, disponibilidad y ficha técnica de cada producto.</p>
+      <a href="catalogo.html" class="btn-primary">Ver catálogo completo</a>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap">
+    <div class="eyebrow">Contacto</div>
+    <h2 style="font-size:28px; margin-bottom:30px;">Solicita tu cotización</h2>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-item">
+          <div class="contact-icon">☏</div>
+          <div><h3>Teléfono</h3><p>[Agrega tu número de contacto]</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div><h3>Correo</h3><p>[Agrega tu correo, ej. info@soldenor.com]</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">⌂</div>
+          <div><h3>Ubicación</h3><p>[Agrega la dirección o zona de cobertura]</p></div>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSf25YU_EHwVHNGsiiy7qjYcb8MlWAx4k1jtB9uKqc5i5DmM0Q/viewform?embedded=true"
+          width="100%" height="820" style="border:none; display:block; background:#fff;"
+          title="Formulario de cotización SOLDENOR">
+          Cargando formulario…
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  SOLDENOR — Venta e instalación de paneles solares, inversores y baterías. © 2026
+</footer>
+
+</body>
+</html>

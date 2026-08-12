@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#10141B; --surface:#171D27; --surface-2:#1D2431; --border:#262E3B; --border-strong:#374156;
+    --text:#E7ECF2; --text-muted:#8A96A6; --text-faint:#5B6577;
+    --accent:#D08A4F; --accent-dim:#3A2B1D;
+    --ok:#4FB286; --ok-dim:#173226;
+    --off:#D3574F; --off-dim:#33191A;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- Datos de productos: EDITA ESTE ARRAY ---------- */
+  /* Cada producto: id, nombre, categoria, precio, disponible (true/false), stock (num opcional),
+     imagen (URL), descripcion, specs (lista clave/valor) */
+
+  header{
+    position:sticky; top:0; z-index:10;
+    background:rgba(16,20,27,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+    padding:18px 32px;
+  }
+  .header-row{display:flex; align-items:center; gap:24px; max-width:1200px; margin:0 auto; flex-wrap:wrap;}
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand-dot{width:10px;height:10px;background:var(--accent);border-radius:2px;transform:rotate(45deg);}
+  .brand h1{font-size:19px; font-weight:600; letter-spacing:0.2px;}
+  .search-wrap{flex:1; min-width:220px; position:relative;}
+  .search-wrap input{
+    width:100%; background:var(--surface); border:1px solid var(--border); color:var(--text);
+    padding:10px 14px 10px 36px; border-radius:var(--radius); font-size:14px; font-family:inherit;
+  }
+  .search-wrap input:focus{outline:none; border-color:var(--border-strong);}
+  .search-wrap svg{position:absolute; left:12px; top:50%; transform:translateY(-50%); opacity:0.4;}
+  .filters{display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{
+    padding:8px 14px; border-radius:100px; border:1px solid var(--border); background:transparent;
+    color:var(--text-muted); font-size:13px; font-family:'Inter',sans-serif; cursor:pointer; transition:0.15s;
+    white-space:nowrap;
+  }
+  .chip:hover{border-color:var(--border-strong); color:var(--text);}
+  .chip.active{background:var(--accent-dim); border-color:var(--accent); color:var(--accent);}
+
+  main{max-width:1200px; margin:0 auto; padding:28px 32px 80px;}
+  .count-row{color:var(--text-faint); font-size:13px; margin-bottom:18px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:18px;}
+
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden;
+    cursor:pointer; transition:transform 0.15s, border-color 0.15s;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{border-color:var(--border-strong); transform:translateY(-2px);}
+  .card-img{width:100%; aspect-ratio:4/3; background:var(--surface-2); overflow:hidden; position:relative;}
+  .card-img img{width:100%; height:100%; object-fit:cover; display:block;}
+  .status-pill{
+    position:absolute; top:10px; left:10px; display:flex; align-items:center; gap:6px;
+    background:rgba(16,20,27,0.85); border-radius:100px; padding:5px 10px 5px 8px; font-size:11.5px;
+  }
+  .led{width:7px; height:7px; border-radius:50%;}
+  .led.ok{background:var(--ok); box-shadow:0 0 6px var(--ok);}
+  .led.off{background:var(--off);}
+  .card-body{padding:16px; display:flex; flex-direction:column; gap:8px; flex:1;}
+  .card-cat{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.6px;}
+  .card-name{font-size:15.5px; font-weight:500; line-height:1.3;}
+  .card-specs{display:flex; flex-wrap:wrap; gap:6px; margin-top:2px;}
+  .spec-tag{
+    font-size:11px; color:var(--text-muted); background:var(--surface-2); border:1px solid var(--border);
+    padding:3px 8px; border-radius:5px;
+  }
+  .card-foot{display:flex; align-items:baseline; justify-content:space-between; margin-top:auto; padding-top:10px;}
+  .price{font-size:18px; font-weight:700; color:var(--accent);}
+  .price-sub{font-size:11px; color:var(--text-faint);}
+
+  .empty{text-align:center; padding:60px 20px; color:var(--text-faint);}
+
+  /* Modal */
+  .overlay{
+    position:fixed; inset:0; background:rgba(8,10,14,0.7); display:none; align-items:center; justify-content:center;
+    z-index:100; padding:20px;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:var(--surface); border:1px solid var(--border-strong); border-radius:16px; max-width:760px; width:100%;
+    max-height:88vh; overflow-y:auto; position:relative;
+  }
+  .modal-close{
+    position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:50%; background:var(--surface-2);
+    border:1px solid var(--border); color:var(--text); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:16px; z-index:2;
+  }
+  .modal-img{width:100%; aspect-ratio:16/9; background:var(--surface-2);}
+  .modal-img img{width:100%; height:100%; object-fit:cover; display:block;}
+  .modal-body{padding:26px 30px 30px;}
+  .modal-cat{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:6px;}
+  .modal-name{font-size:24px; font-weight:600; margin-bottom:10px;}
+  .modal-desc{color:var(--text-muted); font-size:14px; line-height:1.6; margin-bottom:20px;}
+  .modal-top{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px; flex-wrap:wrap; gap:12px;}
+  .modal-price{font-size:28px; font-weight:700; color:var(--accent);}
+  .status-pill.big{position:static; background:var(--ok-dim); padding:7px 14px;}
+  .status-pill.big.off{background:var(--off-dim);}
+  .spec-table{border:1px solid var(--border); border-radius:10px; overflow:hidden;}
+  .spec-row{display:flex; justify-content:space-between; padding:11px 16px; font-size:13.5px; border-bottom:1px solid var(--border);}
+  .spec-row:last-child{border-bottom:none;}
+  .spec-row:nth-child(even){background:var(--surface-2);}
+  .spec-key{color:var(--text-muted);}
+  .spec-val{color:var(--text); font-weight:500; text-align:right;}
+
+  @media (max-width:600px){
+    header{padding:14px 16px;} main{padding:20px 16px 60px;}
+    .modal-body{padding:20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <div class="brand"><div class="brand-dot"></div><h1>Catálogo</h1></div>
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A96A6" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Buscar por nombre, categoría o SKU...">
+    </div>
+  </div>
+  <div class="header-row" style="margin-top:14px;">
+    <div class="filters" id="categoryFilters"></div>
+    <div class="filters" id="availFilters">
+      <button class="chip" data-avail="all">Todos</button>
+      <button class="chip" data-avail="true">Disponible</button>
+      <button class="chip" data-avail="false">Agotado</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="count-row" id="countRow"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="emptyState" style="display:none;">No se encontraron productos con esos filtros.</div>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+/* =======================================================
+   LOS PRODUCTOS SE CARGAN DESDE "productos.csv"
+   (archivo separado, en la misma carpeta que este HTML).
+   Exporta tu inventario desde BusinessTock/Proyecta a CSV/Excel,
+   guarda el archivo como productos.csv con estas columnas, y listo:
+
+   id,nombre,categoria,precio,moneda,disponible,stock,sku,imagen,descripcion,spec_keys,spec_values
+
+   - disponible: escribe "true" o "false"
+   - spec_keys / spec_values: listas separadas por " | " y en el MISMO orden, ej:
+       spec_keys:   Bluetooth | Autonomía | Peso
+       spec_values: 5.3 | 40 h | 260 g
+   - imagen: URL pública de la foto (o déjalo vacío para un marcador genérico)
+======================================================= */
+
+const FALLBACK_PRODUCTS = [
+  {
+    id: 1, nombre: "Producto de ejemplo", categoria: "General",
+    precio: 999, moneda: "RD$", disponible: true, stock: 5, sku: "EJEMPLO-001",
+    imagen: "", descripcion: "No se encontró productos.csv — este es un producto de muestra.",
+    specs: { "Nota": "Sube tu productos.csv junto a este archivo" }
+  }
+];
+
+let PRODUCTS = [];
+
+function parseSpecs(keysStr, valsStr){
+  const keys = (keysStr || "").split("|").map(s => s.trim()).filter(Boolean);
+  const vals = (valsStr || "").split("|").map(s => s.trim()).filter(Boolean);
+  const specs = {};
+  keys.forEach((k,i) => { if(vals[i] !== undefined) specs[k] = vals[i]; });
+  return specs;
+}
+
+function rowsToProducts(rows){
+  return rows.filter(r => r.nombre && r.nombre.trim()).map((r, i) => ({
+    id: r.id ? Number(r.id) : i+1,
+    nombre: r.nombre || "",
+    categoria: r.categoria || "Sin categoría",
+    precio: Number(r.precio) || 0,
+    moneda: r.moneda || "RD$",
+    disponible: String(r.disponible).trim().toLowerCase() === "true",
+    stock: r.stock ? Number(r.stock) : 0,
+    sku: r.sku || "",
+    imagen: r.imagen && r.imagen.trim() ? r.imagen.trim() : "https://placehold.co/800x600/1D2431/5B6577?text=Sin+imagen",
+    descripcion: r.descripcion || "",
+    specs: parseSpecs(r.spec_keys, r.spec_values)
+  }));
+}
+
+function loadProducts(){
+  Papa.parse("productos.csv", {
+    download: true,
+    header: true,
+    skipEmptyLines: true,
+    complete: function(results){
+      const products = rowsToProducts(results.data);
+      PRODUCTS = products.length ? products : FALLBACK_PRODUCTS;
+      buildCategoryFilters();
+      buildAvailFilters();
+      render();
+    },
+    error: function(){
+      PRODUCTS = FALLBACK_PRODUCTS;
+      buildCategoryFilters();
+      buildAvailFilters();
+      render();
+    }
+  });
+}
+
+let currentSearch = "";
+let currentCategory = "all";
+let currentAvail = "all";
+
+function money(p){
+  return p.moneda + " " + p.precio.toLocaleString("es-DO");
+}
+
+function buildCategoryFilters(){
+  const cats = ["all", ...new Set(PRODUCTS.map(p => p.categoria))];
+  const wrap = document.getElementById("categoryFilters");
+  wrap.innerHTML = cats.map(c =>
+    `<button class="chip${c==='all'?' active':''}" data-cat="${c}">${c==='all'?'Todas las categorías':c}</button>`
+  ).join("");
+  wrap.querySelectorAll(".chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      currentCategory = btn.dataset.cat;
+      wrap.querySelectorAll(".chip").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      render();
+    });
+  });
+}
+
+function buildAvailFilters(){
+  const wrap = document.getElementById("availFilters");
+  wrap.querySelectorAll(".chip").forEach((btn,i) => {
+    if(i===0) btn.classList.add("active");
+    btn.addEventListener("click", () => {
+      currentAvail = btn.dataset.avail;
+      wrap.querySelectorAll(".chip").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      render();
+    });
+  });
+}
+
+function filteredProducts(){
+  return PRODUCTS.filter(p => {
+    const matchesSearch = !currentSearch ||
+      p.nombre.toLowerCase().includes(currentSearch) ||
+      p.categoria.toLowerCase().includes(currentSearch) ||
+      p.sku.toLowerCase().includes(currentSearch);
+    const matchesCat = currentCategory === "all" || p.categoria === currentCategory;
+    const matchesAvail = currentAvail === "all" || String(p.disponible) === currentAvail;
+    return matchesSearch && matchesCat && matchesAvail;
+  });
+}
+
+function render(){
+  const list = filteredProducts();
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("emptyState");
+  document.getElementById("countRow").textContent =
+    list.length + (list.length === 1 ? " producto encontrado" : " productos encontrados");
+
+  if(list.length === 0){
+    grid.innerHTML = "";
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
+
+  grid.innerHTML = list.map(p => {
+    const specEntries = Object.entries(p.specs).slice(0,3);
+    return `
+    <div class="card" data-id="${p.id}">
+      <div class="card-img">
+        <img src="${p.imagen}" alt="${p.nombre}" loading="lazy">
+        <div class="status-pill">
+          <span class="led ${p.disponible?'ok':'off'}"></span>
+          ${p.disponible ? 'Disponible' : 'Agotado'}
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.categoria}</div>
+        <div class="card-name">${p.nombre}</div>
+        <div class="card-specs">
+          ${specEntries.map(([k,v]) => `<span class="spec-tag">${v}</span>`).join("")}
+        </div>
+        <div class="card-foot">
+          <div>
+            <div class="price mono">${money(p)}</div>
+            <div class="price-sub">${p.disponible ? p.stock + ' en stock' : 'Sin stock'}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  grid.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("click", () => openModal(Number(card.dataset.id)));
+  });
+}
+
+function openModal(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  const modal = document.getElementById("modal");
+  modal.innerHTML = `
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-img"><img src="${p.imagen}" alt="${p.nombre}"></div>
+    <div class="modal-body">
+      <div class="modal-cat">${p.categoria} · SKU ${p.sku}</div>
+      <div class="modal-name">${p.nombre}</div>
+      <div class="modal-desc">${p.descripcion}</div>
+      <div class="modal-top">
+        <div>
+          <div class="modal-price mono">${money(p)}</div>
+        </div>
+        <div class="status-pill big ${p.disponible?'':'off'}">
+          <span class="led ${p.disponible?'ok':'off'}"></span>
+          ${p.disponible ? p.stock + ' unidades disponibles' : 'Agotado'}
+        </div>
+      </div>
+      <div class="spec-table">
+        ${Object.entries(p.specs).map(([k,v]) => `
+          <div class="spec-row">
+            <span class="spec-key">${k}</span>
+            <span class="spec-val mono">${v}</span>
+          </div>`).join("")}
+      </div>
+    </div>
+  `;
+  document.getElementById("overlay").classList.add("open");
+  document.getElementById("modalClose").addEventListener("click", closeModal);
+}
+
+function closeModal(){
+  document.getElementById("overlay").classList.remove("open");
+}
+
+document.getElementById("overlay").addEventListener("click", (e) => {
+  if(e.target.id === "overlay") closeModal();
+});
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeModal();
+});
+
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  currentSearch = e.target.value.toLowerCase().trim();
+  render();
+});
+
+loadProducts();
+</script>
+</body>
+</html>
