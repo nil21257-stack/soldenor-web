@@ -10,7 +10,7 @@
   :root{
     --bg:#0B1220; --surface:#121B2E; --surface-2:#182238; --border:#233252; --border-strong:#33456D;
     --text:#E8EEFB; --text-muted:#8FA0C2; --text-faint:#5E6E8F;
-    --accent:#2F5FB3; --accent-2:#5580CC; --accent-dim:#152A50; --accent-glow:rgba(47,95,179,0.3);
+    --accent:#3670D6; --accent-2:#5E92E0; --accent-dim:#152A50; --accent-glow:rgba(54,112,214,0.32);
     --ok:#3DBE8B; --ok-dim:#0F2C24;
     --radius:10px;
   }
@@ -39,10 +39,10 @@
     box-shadow:
       0 1px 0 rgba(255,255,255,0.5) inset,
       0 -3px 0 rgba(0,0,0,0.18) inset,
-      0 6px 0 #1B3B73,
+      0 6px 0 #2451A0,
       0 9px 14px rgba(8,20,50,0.55);
   }
-  .key-btn.key-primary:active{ box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 2px 0 #1B3B73, 0 3px 6px rgba(8,20,50,0.5); }
+  .key-btn.key-primary:active{ box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 2px 0 #2451A0, 0 3px 6px rgba(8,20,50,0.5); }
 
   .key-btn.key-secondary{
     background:linear-gradient(180deg, #1B2740, #141D33);
@@ -106,6 +106,8 @@
     display:flex; align-items:center; justify-content:center; position:relative;
   }
   .flow-icon.on{border-color:var(--accent-2); box-shadow:0 0 0 3px var(--accent-glow);}
+  .flow-icon.photo{background:#EEF1F6; padding:5px; overflow:hidden;}
+  .flow-icon.photo img{width:100%; height:100%; object-fit:contain; border-radius:8px;}
   .flow-label{font-size:12.5px; font-weight:500; text-align:center;}
   .flow-sub{font-size:10.5px; color:var(--text-faint); text-align:center;}
   .flow-arrow{flex:0 0 auto; width:34px; height:2px; background:linear-gradient(90deg, var(--border-strong), var(--accent-2)); position:relative; margin-top:26px;}
@@ -260,24 +262,16 @@
     </div>
     <div class="flow-arrow"></div>
     <div class="flow-node">
-      <div class="flow-icon on">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <rect x="3" y="3" width="24" height="24" rx="4" fill="#1B2740" stroke="var(--accent-2)" stroke-width="1.4"/>
-          <path d="M9 12 L14 12 L12 8 L19 16 L14 16 L16 20 Z" fill="#FFC670"/>
-        </svg>
+      <div class="flow-icon on photo">
+        <img src="assets/inversor-8kw.jpg" alt="Inversor solar 8kW">
       </div>
       <div class="flow-label">Inversor</div>
       <div class="flow-sub">DC → AC</div>
     </div>
     <div class="flow-arrow"></div>
     <div class="flow-node">
-      <div class="flow-icon on">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <rect x="9" y="2" width="12" height="3" rx="1" fill="var(--accent-2)"/>
-          <rect x="6" y="5" width="18" height="23" rx="2.5" fill="#1B2740" stroke="var(--accent-2)" stroke-width="1.4"/>
-          <rect x="10" y="18" width="10" height="6" rx="1" fill="#3DBE8B"/>
-          <rect x="10" y="11" width="10" height="5" rx="1" fill="#3DBE8B" opacity="0.55"/>
-        </svg>
+      <div class="flow-icon on photo">
+        <img src="assets/bateria-48350.jpg" alt="Batería solar">
       </div>
       <div class="flow-label">Batería</div>
       <div class="flow-sub">Respaldo 24/7</div>
