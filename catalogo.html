@@ -5,20 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catálogo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#10141B; --surface:#171D27; --surface-2:#1D2431; --border:#262E3B; --border-strong:#374156;
-    --text:#E7ECF2; --text-muted:#8A96A6; --text-faint:#5B6577;
-    --accent:#D08A4F; --accent-dim:#3A2B1D;
-    --ok:#4FB286; --ok-dim:#173226;
-    --off:#D3574F; --off-dim:#33191A;
+    --bg:#0B1220; --surface:#121B2E; --surface-2:#182238; --border:#233252; --border-strong:#33456D;
+    --text:#E8EEFB; --text-muted:#8FA0C2; --text-faint:#5E6E8F;
+    --accent:#3D7FF2; --accent-2:#6FA3FF; --accent-dim:#152A50;
+    --ok:#3DBE8B; --ok-dim:#0F2C24;
+    --off:#E2645C; --off-dim:#33191A;
     --radius:10px;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;}
+  h1,h2,h3{font-family:'Agency FB','Rajdhani',sans-serif; font-weight:700; letter-spacing:0.2px; margin:0;}
   .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* Botones tipo tecla: relieve + sombra, con estado presionado */
+  .key-btn{
+    position:relative; border:none; cursor:pointer;
+    font-family:'Agency FB','Rajdhani',sans-serif; font-weight:700; letter-spacing:0.4px;
+    transition:transform 0.08s ease, box-shadow 0.08s ease; -webkit-tap-highlight-color:transparent;
+  }
+  .key-btn:active{transform:translateY(2px);}
+  .key-btn.key-primary{
+    background:linear-gradient(180deg, var(--accent-2), var(--accent)); color:#06142E;
+    box-shadow:0 1px 0 rgba(255,255,255,0.5) inset, 0 -3px 0 rgba(0,0,0,0.18) inset, 0 6px 0 #1E4FA8, 0 9px 14px rgba(8,20,50,0.55);
+  }
+  .key-btn.key-primary:active{ box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 2px 0 #1E4FA8, 0 3px 6px rgba(8,20,50,0.5); }
+  .key-btn.key-secondary{
+    background:linear-gradient(180deg, #1B2740, #141D33); color:var(--text); border:1px solid var(--border-strong);
+    box-shadow:0 1px 0 rgba(255,255,255,0.06) inset, 0 -3px 0 rgba(0,0,0,0.35) inset, 0 6px 0 #0A1220, 0 9px 14px rgba(0,0,0,0.4);
+  }
+  .key-btn.key-secondary:active{ box-shadow:0 1px 0 rgba(255,255,255,0.05) inset, 0 2px 0 #0A1220, 0 3px 6px rgba(0,0,0,0.35); }
 
   /* ---------- Datos de productos: EDITA ESTE ARRAY ---------- */
   /* Cada producto: id, nombre, categoria, precio, disponible (true/false), stock (num opcional),
@@ -26,29 +44,31 @@
 
   header{
     position:sticky; top:0; z-index:10;
-    background:rgba(16,20,27,0.92); backdrop-filter:blur(8px);
+    background:rgba(11,18,32,0.92); backdrop-filter:blur(8px);
     border-bottom:1px solid var(--border);
     padding:18px 32px;
   }
   .header-row{display:flex; align-items:center; gap:24px; max-width:1200px; margin:0 auto; flex-wrap:wrap;}
   .brand{display:flex; align-items:center; gap:10px;}
   .brand-dot{width:10px;height:10px;background:var(--accent);border-radius:2px;transform:rotate(45deg);}
-  .brand h1{font-size:19px; font-weight:600; letter-spacing:0.2px;}
+  .brand h1{font-size:21px; font-weight:700; letter-spacing:0.3px;}
   .search-wrap{flex:1; min-width:220px; position:relative;}
   .search-wrap input{
     width:100%; background:var(--surface); border:1px solid var(--border); color:var(--text);
     padding:10px 14px 10px 36px; border-radius:var(--radius); font-size:14px; font-family:inherit;
+    box-shadow:0 -2px 0 rgba(0,0,0,0.25) inset;
   }
   .search-wrap input:focus{outline:none; border-color:var(--border-strong);}
   .search-wrap svg{position:absolute; left:12px; top:50%; transform:translateY(-50%); opacity:0.4;}
   .filters{display:flex; gap:8px; flex-wrap:wrap;}
   .chip{
-    padding:8px 14px; border-radius:100px; border:1px solid var(--border); background:transparent;
-    color:var(--text-muted); font-size:13px; font-family:'Inter',sans-serif; cursor:pointer; transition:0.15s;
-    white-space:nowrap;
+    padding:8px 14px; border-radius:100px; border:1px solid var(--border); background:linear-gradient(180deg, var(--surface-2), var(--surface));
+    color:var(--text-muted); font-size:13px; font-family:'Inter',sans-serif; cursor:pointer; transition:0.1s;
+    white-space:nowrap; box-shadow:0 2px 0 rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.04) inset;
   }
   .chip:hover{border-color:var(--border-strong); color:var(--text);}
-  .chip.active{background:var(--accent-dim); border-color:var(--accent); color:var(--accent);}
+  .chip:active{transform:translateY(1px); box-shadow:0 1px 0 rgba(0,0,0,0.3);}
+  .chip.active{background:linear-gradient(180deg, var(--accent-2), var(--accent)); border-color:var(--accent); color:#06142E; font-weight:600;}
 
   main{max-width:1200px; margin:0 auto; padding:28px 32px 80px;}
   .count-row{color:var(--text-faint); font-size:13px; margin-bottom:18px;}
