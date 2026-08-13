@@ -10,7 +10,7 @@
   :root{
     --bg:#0B1220; --surface:#121B2E; --surface-2:#182238; --border:#233252; --border-strong:#33456D;
     --text:#E8EEFB; --text-muted:#8FA0C2; --text-faint:#5E6E8F;
-    --accent:#2F5FB3; --accent-2:#5580CC; --accent-dim:#152A50;
+    --accent:#3670D6; --accent-2:#5E92E0; --accent-dim:#152A50;
     --ok:#3DBE8B; --ok-dim:#0F2C24;
     --off:#E2645C; --off-dim:#33191A;
     --radius:10px;
@@ -29,9 +29,9 @@
   .key-btn:active{transform:translateY(2px);}
   .key-btn.key-primary{
     background:linear-gradient(180deg, var(--accent-2), var(--accent)); color:#06142E;
-    box-shadow:0 1px 0 rgba(255,255,255,0.5) inset, 0 -3px 0 rgba(0,0,0,0.18) inset, 0 6px 0 #1B3B73, 0 9px 14px rgba(8,20,50,0.55);
+    box-shadow:0 1px 0 rgba(255,255,255,0.5) inset, 0 -3px 0 rgba(0,0,0,0.18) inset, 0 6px 0 #2451A0, 0 9px 14px rgba(8,20,50,0.55);
   }
-  .key-btn.key-primary:active{ box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 2px 0 #1B3B73, 0 3px 6px rgba(8,20,50,0.5); }
+  .key-btn.key-primary:active{ box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 2px 0 #2451A0, 0 3px 6px rgba(8,20,50,0.5); }
   .key-btn.key-secondary{
     background:linear-gradient(180deg, #1B2740, #141D33); color:var(--text); border:1px solid var(--border-strong);
     box-shadow:0 1px 0 rgba(255,255,255,0.06) inset, 0 -3px 0 rgba(0,0,0,0.35) inset, 0 6px 0 #0A1220, 0 9px 14px rgba(0,0,0,0.4);
@@ -89,6 +89,11 @@
   .led{width:7px; height:7px; border-radius:50%;}
   .led.ok{background:var(--ok); box-shadow:0 0 6px var(--ok);}
   .led.off{background:var(--off);}
+  .offer-pill{
+    position:absolute; top:10px; right:10px; background:linear-gradient(180deg,#FF7A5C,#E2503A); color:#2B0A03;
+    font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:100px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.35);
+  }
   .card-body{padding:16px; display:flex; flex-direction:column; gap:8px; flex:1;}
   .card-cat{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.6px;}
   .card-name{font-size:15.5px; font-weight:500; line-height:1.3;}
@@ -120,6 +125,14 @@
   }
   .modal-img{width:100%; aspect-ratio:16/9; background:var(--surface-2);}
   .modal-img img{width:100%; height:100%; object-fit:cover; display:block;}
+  .modal-thumbs{display:flex; gap:8px; padding:12px 30px 0; overflow-x:auto;}
+  .thumb{
+    flex:0 0 auto; width:56px; height:56px; border-radius:8px; overflow:hidden; padding:0; cursor:pointer;
+    border:2px solid var(--border); background:var(--surface-2); opacity:0.7; transition:0.15s;
+  }
+  .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .thumb:hover{opacity:1;}
+  .thumb.active{border-color:var(--accent-2); opacity:1;}
   .modal-body{padding:26px 30px 30px;}
   .modal-cat{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:6px;}
   .modal-name{font-size:24px; font-weight:600; margin-bottom:10px;}
@@ -208,19 +221,26 @@ function parseSpecs(keysStr, valsStr){
 }
 
 function rowsToProducts(rows){
-  return rows.filter(r => r.nombre && r.nombre.trim()).map((r, i) => ({
-    id: r.id ? Number(r.id) : i+1,
-    nombre: r.nombre || "",
-    categoria: r.categoria || "Sin categoría",
-    precio: Number(r.precio) || 0,
-    moneda: r.moneda || "RD$",
-    disponible: String(r.disponible).trim().toLowerCase() === "true",
-    stock: r.stock ? Number(r.stock) : 0,
-    sku: r.sku || "",
-    imagen: r.imagen && r.imagen.trim() ? r.imagen.trim() : "https://placehold.co/800x600/1D2431/5B6577?text=Sin+imagen",
-    descripcion: r.descripcion || "",
-    specs: parseSpecs(r.spec_keys, r.spec_values)
-  }));
+  return rows.filter(r => r.nombre && r.nombre.trim()).map((r, i) => {
+    const mainImg = r.imagen && r.imagen.trim() ? r.imagen.trim() : "https://placehold.co/800x600/1D2431/5B6577?text=Sin+imagen";
+    const extraImgs = (r.imagenes_extra || "").split("|").map(s => s.trim()).filter(Boolean);
+    const precioOferta = r.precio_oferta && String(r.precio_oferta).trim() !== "" ? Number(r.precio_oferta) : null;
+    return {
+      id: r.id ? Number(r.id) : i+1,
+      nombre: r.nombre || "",
+      categoria: r.categoria || "Sin categoría",
+      precio: Number(r.precio) || 0,
+      precioOferta: (precioOferta && precioOferta > 0 && precioOferta < (Number(r.precio)||0)) ? precioOferta : null,
+      moneda: r.moneda || "RD$",
+      disponible: String(r.disponible).trim().toLowerCase() === "true",
+      stock: r.stock ? Number(r.stock) : 0,
+      sku: r.sku || "",
+      imagen: mainImg,
+      imagenes: [mainImg, ...extraImgs],
+      descripcion: r.descripcion || "",
+      specs: parseSpecs(r.spec_keys, r.spec_values)
+    };
+  });
 }
 
 function loadProducts(){
@@ -248,8 +268,20 @@ let currentSearch = "";
 let currentCategory = "all";
 let currentAvail = "all";
 
-function money(p){
-  return p.moneda + " " + p.precio.toLocaleString("es-DO");
+function money(moneda, precio){
+  return moneda + " " + precio.toLocaleString("es-DO");
+}
+
+function priceBlock(p, size){
+  if(p.precioOferta){
+    const pct = Math.round((1 - p.precioOferta / p.precio) * 100);
+    return `
+      <div style="display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;">
+        <span class="${size==='big'?'modal-price':'price'} mono">${money(p.moneda, p.precioOferta)}</span>
+        <span class="mono" style="font-size:${size==='big'?'15px':'12px'}; color:var(--text-faint); text-decoration:line-through;">${money(p.moneda, p.precio)}</span>
+      </div>`;
+  }
+  return `<span class="${size==='big'?'modal-price':'price'} mono">${money(p.moneda, p.precio)}</span>`;
 }
 
 function buildCategoryFilters(){
@@ -317,6 +349,7 @@ function render(){
           <span class="led ${p.disponible?'ok':'off'}"></span>
           ${p.disponible ? 'Disponible' : 'Agotado'}
         </div>
+        ${p.precioOferta ? `<div class="offer-pill">-${Math.round((1 - p.precioOferta / p.precio) * 100)}%</div>` : ''}
       </div>
       <div class="card-body">
         <div class="card-cat">${p.categoria}</div>
@@ -326,7 +359,7 @@ function render(){
         </div>
         <div class="card-foot">
           <div>
-            <div class="price mono">${money(p)}</div>
+            ${priceBlock(p, 'small')}
             <div class="price-sub">${p.disponible ? p.stock + ' en stock' : 'Sin stock'}</div>
           </div>
         </div>
@@ -342,16 +375,22 @@ function render(){
 function openModal(id){
   const p = PRODUCTS.find(x => x.id === id);
   const modal = document.getElementById("modal");
+  const gallery = p.imagenes.length > 1 ? `
+    <div class="modal-thumbs">
+      ${p.imagenes.map((img,i) => `<button class="thumb${i===0?' active':''}" data-img="${img}"><img src="${img}" alt="${p.nombre} ${i+1}"></button>`).join("")}
+    </div>` : '';
   modal.innerHTML = `
     <button class="modal-close" id="modalClose">✕</button>
-    <div class="modal-img"><img src="${p.imagen}" alt="${p.nombre}"></div>
+    <div class="modal-img"><img id="modalMainImg" src="${p.imagen}" alt="${p.nombre}"></div>
+    ${gallery}
     <div class="modal-body">
       <div class="modal-cat">${p.categoria} · SKU ${p.sku}</div>
       <div class="modal-name">${p.nombre}</div>
       <div class="modal-desc">${p.descripcion}</div>
       <div class="modal-top">
         <div>
-          <div class="modal-price mono">${money(p)}</div>
+          ${priceBlock(p, 'big')}
+          ${p.precioOferta ? `<div style="font-size:11.5px; color:#FF9478; font-weight:600; margin-top:4px;">Oferta por tiempo limitado</div>` : ''}
         </div>
         <div class="status-pill big ${p.disponible?'':'off'}">
           <span class="led ${p.disponible?'ok':'off'}"></span>
@@ -369,6 +408,13 @@ function openModal(id){
   `;
   document.getElementById("overlay").classList.add("open");
   document.getElementById("modalClose").addEventListener("click", closeModal);
+  modal.querySelectorAll(".thumb").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.getElementById("modalMainImg").src = btn.dataset.img;
+      modal.querySelectorAll(".thumb").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
 }
 
 function closeModal(){
