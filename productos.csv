@@ -1,38 +1,22 @@
 ﻿id,nombre,categoria,precio,precio_oferta,moneda,disponible,stock,sku,imagen,imagenes_extra,descripcion,spec_keys,spec_values
-11,Felicity solar FLA12100PG2,Baterías,20800.0,,RD$,true,1,BATERIA-11,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,12V | 100Ah | Litio | 6000+ | 100A | SOLDENOR
-12,Felicity solar FLA12171-EU,Baterías,32500.0,,RD$,true,1,BATERIA-12,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,12V | 171Ah | Litio | 6000+ | 120A | SOLDENOR
-13,Felicity solar FLA24100-EU,Baterías,42500.0,,RD$,true,1,BATERIA-13,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,24V | 100Ah | Litio | 6000+ | 100A | SOLDENOR
-14,Felicity solar FLA24171-EU,Baterías,66500.0,,RD$,true,1,BATERIA-14,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,24V | 171Ah | Litio | 6000+ | 120A | SOLDENOR
-38,Felicity solar FLA 24200,Baterías,91000.0,,RD$,false,0,BATERIA-38,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima,24V | 200Ah | Litio | 6000+ | 120A
-15,Felicity solar FLA48100-EU,Baterías,95400.0,,RD$,false,0,BATERIA-15,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,48V | 100Ah | Litio | 6000+ | 100A | SOLDENOR
-16,Felicity solar FLA48171-EU,Baterías,116500.0,,RD$,true,1,BATERIA-16,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,48V | 171Ah | Litio | 6000+ | 120A | SOLDENOR
-17,Felicity solar FLA48280-EU,Baterías,170000.0,,RD$,true,1,BATERIA-17,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,48V | 280Ah | Litio | 6000+ | 120A | SOLDENOR
-18,Felicity solar FLA48300,Baterías,188000.0,,RD$,true,1,BATERIA-18,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,48V | 300Ah | Litio | 6000+ | 120A | SOLDENOR
-19,Felicity solar FLA48314-EU,Baterías,194000.0,,RD$,false,0,BATERIA-19,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,48V | 314Ah | Litio | 6000+ | 120A | SOLDENOR
-20,Felicity solar FLA48350TG2,Baterías,198000.0,,RD$,true,1,BATERIA-20,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,48V | 350Ah | Litio | 8000+ | 175A | SOLDENOR
-21,Felicity solar FLA48460-EU,Baterías,258000.0,,RD$,true,1,BATERIA-21,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,48V | 460Ah | Litio | 6000+ | 200A | SOLDENOR
-22,Felicity solar FLA48500,Baterías,284000.0,,RD$,true,1,BATERIA-22,,,,Voltaje | Capacidad | Tipo | Ciclos de vida | Descarga máxima | Proveedor,48V | 500Ah | Litio | 6000+ | 200A | SOLDENOR
+11,Felicity solar FLA12100PG2,Baterías,20800.0,19800.0,RD$,true,1,BATERIA-11,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,12V | 100Ah | 1.2 kWh | Litio | 6000+ | 100A | 100A | SOLDENOR
+12,Felicity solar FLA12171-EU,Baterías,32500.0,,RD$,true,1,BATERIA-12,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,12V | 171Ah | 2.2 kWh | Litio | 6000+ | 120A | 120A | SOLDENOR
+13,Felicity solar FLA24100-EU,Baterías,42500.0,,RD$,true,1,BATERIA-13,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,24V | 100Ah | 2.5 kWh | Litio | 6000+ | 100A | 100A | SOLDENOR
+14,Felicity solar FLA24171-EU,Baterías,66500.0,,RD$,true,1,BATERIA-14,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,24V | 171Ah | 4.4 kWh | Litio | 6000+ | 120A | 120A | SOLDENOR
+15,Felicity solar FLA48100-EU,Baterías,95400.0,,RD$,false,0,BATERIA-15,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,48V | 100Ah | 5.0 kWh | Litio | 6000+ | 100A | 100A | SOLDENOR
+16,Felicity solar FLA48171-EU,Baterías,116500.0,,RD$,true,1,BATERIA-16,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,48V | 171Ah | 8.8 kWh | Litio | 6000+ | 120A | 120A | SOLDENOR
+17,Felicity solar FLA48280-EU,Baterías,170000.0,,RD$,true,1,BATERIA-17,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,48V | 280Ah | 14.3 kWh | Litio | 6000+ | 120A | 120A | SOLDENOR
+18,Felicity solar FLA48300,Baterías,188000.0,,RD$,true,1,BATERIA-18,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,48V | 300Ah | 15.0 kWh | Litio | 6000+ | 120A | 120A | SOLDENOR
+19,Felicity solar FLA48314-EU,Baterías,194000.0,,RD$,false,0,BATERIA-19,https://github.com/nil21257-stack/soldenor-web/blob/main/assets/bateria-48350.jpg,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,48V | 314Ah | 16.0 kWh | Litio | 6000+ | 120A | 120A | SOLDENOR
+20,Felicity solar FLA48350TG2,Baterías,198000.0,,RD$,true,1,BATERIA-20,https://github.com/nil21257-stack/soldenor-web/blob/9c8d400262c87c835004178568453a030d094db1/assets/bateria-48350.jpg,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,48V | 350Ah | 17.5 kWh | Litio | 8000+ | 175A | 175A | SOLDENOR
+21,Felicity solar FLA48460-EU,Baterías,258000.0,,RD$,true,1,BATERIA-21,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,48V | 460Ah | 23.5 kWh | Litio | 6000+ | 200A | 200A | SOLDENOR
+22,Felicity solar FLA48500,Baterías,284000.0,,RD$,true,1,BATERIA-22,,,,Voltaje | Capacidad | Capacidad total | Tipo | Ciclos de vida | Carga máxima | Descarga máxima | Proveedor,48V | 500Ah | 25.0 kWh | Litio | 6000+ | 200A | 200A | SOLDENOR
 9,Felicity solar SCCM10048-Ⅲ,Controladores,16000.0,,RD$,true,1,CONTROLADOR-9,,,,Amperaje | Voltaje máx. PV | Voltajes soportados | Entradas MPPT | Proveedor,"100A | 160.0V | 12,24,48 | 1 | SOLDENOR"
 10,Felicity solar SCCM12048-Ⅲ,Controladores,19000.0,,RD$,true,1,CONTROLADOR-10,,,,Amperaje | Voltaje máx. PV | Voltajes soportados | Entradas MPPT | Proveedor,"120A | 160.0V | 24,48 | 1 | SOLDENOR"
 7,Felicity solar SCCM6048-II,Controladores,11500.0,,RD$,true,1,CONTROLADOR-7,,,,Amperaje | Voltaje máx. PV | Voltajes soportados | Entradas MPPT | Proveedor,"60A | 130.0V | 12,24,48 | 1 | SOLDENOR"
 8,Felicity solar SCCM8048-II,Controladores,13000.0,,RD$,true,1,CONTROLADOR-8,,,,Amperaje | Voltaje máx. PV | Voltajes soportados | Entradas MPPT | Proveedor,"80A | 130.0V | 12,24,48 | 1 | SOLDENOR"
-37,soldenor 12048,Inversores,95000.0,,RD$,true,1,INVERSOR-37,,,,Potencia | Banco de baterías | Salida | Proveedor,12000 W | 48V | 110/220 V | SOLDENOR
-25,soldenor 1512,Inversores,22500.0,,RD$,true,1,INVERSOR-25,,,,Potencia | Banco de baterías | Salida | Proveedor,1500 W | 12V | 110 V | SOLDENOR
-26,soldenor 1524,Inversores,22500.0,,RD$,true,1,INVERSOR-26,,,,Potencia | Banco de baterías | Salida | Proveedor,1500 W | 24V | 110 V | SOLDENOR
-27,soldenor 2012,Inversores,24000.0,,RD$,true,1,INVERSOR-27,,,,Potencia | Banco de baterías | Salida | Proveedor,2000 W | 12V | 110 V | SOLDENOR
-28,soldenor 2024,Inversores,24500.0,,RD$,true,1,INVERSOR-28,,,,Potencia | Banco de baterías | Salida | Proveedor,2000 W | 24V | 110 V | SOLDENOR
-30,soldenor 2512,Inversores,28000.0,,RD$,true,1,INVERSOR-30,,,,Potencia | Banco de baterías | Salida | Proveedor,2500 W | 12V | 220 V | SOLDENOR
-29,soldenor 2524,Inversores,28500.0,,RD$,true,1,INVERSOR-29,,,,Potencia | Banco de baterías | Salida | Proveedor,2500 W | 24V | 110 V | SOLDENOR
-31,soldenor 3524,Inversores,32000.0,,RD$,true,1,INVERSOR-31,,,,Potencia | Banco de baterías | Salida | Proveedor,3500 W | 24V | 110 V | SOLDENOR
-32,soldenor 4024,Inversores,36000.0,,RD$,true,1,INVERSOR-32,,,,Potencia | Banco de baterías | Salida | Proveedor,4000 W | 24V | 110 V | SOLDENOR
-33,soldenor 4048,Inversores,38000.0,,RD$,true,1,INVERSOR-33,,,,Potencia | Banco de baterías | Salida | Proveedor,4000 W | 48V | 110 V | SOLDENOR
-34,soldenor 5048,Inversores,44000.0,,RD$,true,1,INVERSOR-34,,,,Potencia | Banco de baterías | Salida | Proveedor,5000 W | 48V | 110/220 V | SOLDENOR
-35,soldenor 6048,Inversores,58000.0,,RD$,true,1,INVERSOR-35,,,,Potencia | Banco de baterías | Salida | Proveedor,6000 W | 48V | 110/220 V | SOLDENOR
-36,soldenor 8048,Inversores,70000.0,,RD$,true,1,INVERSOR-36,,,,Potencia | Banco de baterías | Salida | Proveedor,8000 W | 48V | 110/220 V | SOLDENOR
 2,Felicity solar IVCM1012 LV,Inversores,19500.0,,RD$,true,1,INVERSOR-2,,,,Potencia | Banco de baterías | Salida | Controlador incluido | Proveedor,1000 W | 12V | 110 V | Sí | SOLDENOR
 3,Felicity solar IVCM2024 LV,Inversores,22500.0,,RD$,true,1,INVERSOR-3,,,,Potencia | Banco de baterías | Salida | Controlador incluido | Proveedor,2000 W | 24V | 110 V | Sí | SOLDENOR
 4,Felicity solar IVEM3048-LV (110V),Inversores,33000.0,,RD$,true,1,INVERSOR-4,,,,Potencia | Banco de baterías | Salida | Controlador incluido | Paralelo | Proveedor,3000 W | 48V | 110 V | Sí | Sí | SOLDENOR
 5,Felicity solar IVEM5048-LV (110V),Inversores,38900.0,,RD$,true,1,INVERSOR-5,,,,Potencia | Banco de baterías | Salida | Controlador incluido | Paralelo | Proveedor,5000 W | 48V | 110 V | Sí | Sí | SOLDENOR
 6,Felicity solar IVGM8KLP2G1,Inversores,125000.0,,RD$,true,1,INVERSOR-6,,,,Potencia | Banco de baterías | Salida | Controlador incluido | Paralelo | Proveedor,8000 W | 48V | 110/220 V | Sí | Sí | SOLDENOR
-1,DAZIsolar DZM640W,Paneles solares,8000.0,,RD$,true,1,PANEL_SOLAR-1,,,,Potencia | Voc | Área | Proveedor,640 W | 49.85 V | 2.7 m² | SOLDENOR
-39,jinko solar JKM625N,Paneles solares,8000.0,,RD$,true,1,PANEL_SOLAR-39,,,,Potencia | Voc | Área | Proveedor,625 W | 49.28 V | 2.7 m² | SOLDENOR
