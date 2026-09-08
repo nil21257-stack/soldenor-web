@@ -165,6 +165,13 @@
   .spec-key{color:var(--text-muted);}
   .spec-val{color:var(--text); font-weight:500; text-align:right;}
 
+  .manual-btn{
+    display:flex; align-items:center; justify-content:center; gap:8px; margin-top:16px;
+    padding:12px; border-radius:9px; border:1px solid var(--border-strong); background:var(--surface-2);
+    color:var(--text); text-decoration:none; font-size:13.5px; font-weight:600; transition:0.15s;
+  }
+  .manual-btn:hover{border-color:var(--accent-2); color:var(--accent-2);}
+
   @media (max-width:600px){
     header{padding:14px 16px;} main{padding:20px 16px 60px;}
     .modal-body{padding:20px;}
@@ -260,6 +267,7 @@ function rowsToProducts(rows){
       imagen: mainImg,
       imagenes: [mainImg, ...extraImgs],
       descripcion: r.descripcion || "",
+      manualUrl: r.manual_url && r.manual_url.trim() ? r.manual_url.trim() : null,
       specs: parseSpecs(r.spec_keys, r.spec_values)
     };
   });
@@ -426,6 +434,11 @@ function openModal(id){
             <span class="spec-val mono">${v}</span>
           </div>`).join("")}
       </div>
+      ${p.manualUrl ? `
+        <a href="${p.manualUrl}" target="_blank" rel="noopener" class="manual-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v9m0 0l-3-3m3 3l3-3M2 12v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Descargar manual (PDF)
+        </a>` : ''}
     </div>
   `;
   document.getElementById("overlay").classList.add("open");
